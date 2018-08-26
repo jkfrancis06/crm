@@ -24,19 +24,11 @@ export class AuthenticationServiceService {
 
   Login(password, username): Promise<string>  {
 
-
-
-    const headers = new Headers();
-    headers.append('Access-Control-Allow-Origin','*');
-
-
-
-
     const url = this.constProvider.SERVER_ADDRESS + this.loginUrl;
     return this.httpClient.post('http://197.255.237.253:8001/crm/index.php/admin/login', {
       'login': username,
       'password': password
-    }, {headers: headers}).toPromise()
+    }).toPromise()
       .then(res =>
         console.log(res)
       )
