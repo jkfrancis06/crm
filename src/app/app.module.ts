@@ -37,7 +37,7 @@ const routes: Routes = [
     BrowserModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
-    // Materialize modules
+    //
     MzValidationModule,
     MzInputModule,
     MzButtonModule,
@@ -46,7 +46,6 @@ const routes: Routes = [
     RouterModule.forRoot(routes),
   ],
   providers: [
-    NgControl
   ],
   bootstrap: [AppComponent]
 })
