@@ -51,7 +51,7 @@ export class LoginComponent implements OnInit {
 
     console.log(this.loginForm.value);
 
-    this.authenticationService.Login('toto', 'toto').then(response => {
+    this.authenticationService.login('toto', 'toto').then(response => {
         console.log(response);
       }
     )
