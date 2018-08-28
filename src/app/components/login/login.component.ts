@@ -2,8 +2,7 @@ import { Component, OnInit, Renderer } from '@angular/core';
 import {AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {LoginData} from '../../models/login-data';
 import {AuthenticationServiceService} from '../../providers/auth/authentication-service.service';
-import {MzModalService, MzToastService} from "ngx-materialize";
-import {LoaderModalComponent} from "../loader-modal/loader-modal.component";
+import {MzModalService, MzToastService} from 'ngx-materialize';
 
 
 @Component({
