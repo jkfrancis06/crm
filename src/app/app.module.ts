@@ -18,7 +18,6 @@ import {
 import { MzInputModule } from 'ngx-materialize';
 import { MzButtonModule } from 'ngx-materialize';
 import { HttpClientModule } from '@angular/common/http';
-import { LoaderModalComponent } from './components/loader-modal/loader-modal.component';
 
 
 
@@ -36,8 +35,7 @@ const routes: Routes = [
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent,
-    LoaderModalComponent
+    LoginComponent
   ],
   imports: [
     BrowserModule,
