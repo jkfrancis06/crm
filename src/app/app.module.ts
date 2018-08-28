@@ -27,8 +27,7 @@ import { HttpClientModule } from '@angular/common/http';
 
 const routes: Routes = [
   // Super Admin routes
-  { path: 'login', component: LoginComponent},
-  { path: 'test', component: LoaderModalComponent}
+  { path: 'login', component: LoginComponent}
   ];
 
 
