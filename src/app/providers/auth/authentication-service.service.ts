@@ -26,7 +26,7 @@ export class AuthenticationServiceService {
 
 
 
-  login (password, username): Promise<string> {
+  login (password, username): Promise<any> {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json'
