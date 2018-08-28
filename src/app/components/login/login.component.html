@@ -1,5 +1,5 @@
 <main>
-  <div class="container">
+  <div>
     <div class="row">
       <div class="col s6 m6 l6 offset-s2 offset-m4 offset-l4">
         <img src="../../../../assets/img/s5_logo.png" class="form-logo-img">
@@ -35,7 +35,7 @@
                       <input mz-input mz-validation required
                              id="password"
                              formControlName="password"
-                             type="text"
+                             type="password"
                              [errorMessageResource]="errorMessageResources.password"
                              [label]="'Password'"/>
                     </mz-input-container>
@@ -52,6 +52,12 @@
           </form>
         </div>
       </div>
+
+      <div *ngIf="loader == true" class="spinner-box">
+        <mz-spinner [color]="'blue'" [size]="'big'" style="position: absolute;left: 50%;top: 40%;">
+        </mz-spinner>
+      </div>
+
     </div>
   </div>
 </main>

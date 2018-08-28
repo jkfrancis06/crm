@@ -11,10 +11,14 @@ import { LoginComponent } from './components/login/login.component';
 
 // Materialize modules
 
-import { MzValidationModule } from 'ngx-materialize';
+import {
+  MzBaseModal, MzModalComponent, MzModalModule, MzSpinnerModule, MzToastModule,
+  MzValidationModule
+} from 'ngx-materialize';
 import { MzInputModule } from 'ngx-materialize';
 import { MzButtonModule } from 'ngx-materialize';
 import { HttpClientModule } from '@angular/common/http';
+import { LoaderModalComponent } from './components/loader-modal/loader-modal.component';
 
 
 
@@ -24,14 +28,16 @@ import { HttpClientModule } from '@angular/common/http';
 
 const routes: Routes = [
   // Super Admin routes
-  { path: 'login', component: LoginComponent}
+  { path: 'login', component: LoginComponent},
+  { path: 'test', component: LoaderModalComponent}
   ];
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent
+    LoginComponent,
+    LoaderModalComponent
   ],
   imports: [
     BrowserModule,
@@ -41,6 +47,9 @@ const routes: Routes = [
     MzValidationModule,
     MzInputModule,
     MzButtonModule,
+    MzModalModule,
+    MzSpinnerModule,
+    MzToastModule,
     //
     HttpClientModule,
     RouterModule.forRoot(routes),

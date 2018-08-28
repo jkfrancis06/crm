@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 
 import {ConstantServiceService} from '../const/constant-service.service';
-import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
+import {HttpClient, HttpErrorResponse, HttpHeaders, HttpResponse} from '@angular/common/http';
 import {Headers, Response} from '@angular/http';
-import {Observable} from 'rxjs/index';
+import {Observable, of} from 'rxjs/index';
+import {catchError, map, timeout} from 'rxjs/internal/operators';
 
 
 @Injectable({
@@ -14,6 +15,7 @@ export class AuthenticationServiceService {
   public token: string;
   public loginUrl = '/crm/index.php/admin/login';
   SERVER_ADDRESS: string;
+  result: any;
 
 
   constructor(private httpClient: HttpClient,
@@ -25,21 +27,66 @@ export class AuthenticationServiceService {
   }
 
 
+  //
+  // login (password, username): Promise<any> {
+  //
+  //   const httpOptions = {
+  //     headers: new HttpHeaders({
+  //       'Access-Control-Allow-Origin': '*'
+  //     })
+  //   };
+  //
+  //   return this.httpClient.post(this.SERVER_ADDRESS + '/crm/index.php/admin/login', {
+  //     login: username,
+  //     password: password
+  //   }, httpOptions).toPromise()
+  //     .then(res =>
+  //       console.log(res)
+  //     )
+  //     .catch(msg => console.log(msg));
+  // }
 
-  login (password, username): Promise<any> {
+
+  login(username: string, password: string): Observable<any> {
+
     const httpOptions = {
       headers: new HttpHeaders({
-        'Content-Type':  'application/json'
+        'Access-Control-Allow-Origin': '*',
+        'Content-Type': 'application/json',
       })
     };
-    return this.httpClient.post('http://197.255.237.253:8001/crm/index.php/admin/login', {
-      'login': username,
-      'password': password
-    } , httpOptions).toPromise()
-      .then(res =>
-        console.log(res)
-      )
-      .catch(msg => console.log(msg));
+
+    return this.httpClient.post(this.SERVER_ADDRESS + '/crm/index.php/admin/login', {
+      login: username,
+      password: password
+    }, httpOptions)
+      .pipe(
+        map(response => console.log(response)),
+        timeout(2500),
+        catchError(error => of(
+          800 // Is a network error
+        ))
+      );
+
+
+
+    // return this.httpClient.post(this.SERVER_ADDRESS + '/crm/index.php/admin/login', {
+    //   login: username,
+    //   password: password
+    // }, httpOptions)
+    //   .pipe(
+    //     map(response => console.log(response))
+  }
+
+
+  private handleError (error: HttpErrorResponse) {
+    // TODO: seems we cannot use messageService from here...
+    const errMsg = (error.message) ? error.message : 'Server error';
+    console.error(errMsg);
+    if (error.status === 401 ) {
+      window.location.href = '/';
+    }
+    return Observable.throw(errMsg);
   }
 
 }
