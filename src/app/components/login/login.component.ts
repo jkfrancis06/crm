@@ -3,6 +3,7 @@ import {AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validat
 import {LoginData} from '../../models/login-data';
 import {AuthenticationServiceService} from '../../providers/auth/authentication-service.service';
 import {MzModalService, MzToastService} from 'ngx-materialize';
+import {Router} from "@angular/router";
 
 
 @Component({
@@ -20,9 +21,11 @@ export class LoginComponent implements OnInit {
   errorMessageResources = {
     username: {
       required: 'Username is required.',
+      error: 'Invalid username or password.',
     },
     password: {
       required: 'Password is required.',
+      error: 'Invalid username or password.',
     }
   };
 
@@ -40,6 +43,7 @@ export class LoginComponent implements OnInit {
               private authenticationService: AuthenticationServiceService,
               private modalService: MzModalService,
               private toastService: MzToastService,
+              private router: Router
   ) { }
 
   ngOnInit() {
@@ -58,16 +62,25 @@ export class LoginComponent implements OnInit {
     this.loader = true;
     console.log(this.loginForm.value);
     // send login request to rest api
-    let req = this.authenticationService.login(this.loginForm.value.username, this.loginForm.value.password).subscribe(response => {
+    this.authenticationService.login(this.loginForm.value.username, this.loginForm.value.password).subscribe(response => {
         console.log(response);
         this.loader = false;
         if (response === 800) {
-          this.toastService.show('Network error. Please try again later',4000, 'red');
-        }else {
+          // If network error
+          this.toastService.show('Network error. Please try again later',5000, 'red');
+        } else {
+          // if invalid password or username
           if (response.result === 0) {
-            alert('error');
+            // show toast and forms to invalid
+            this.toastService.show('Invalid username or password',5000, 'red');
+            this.loginForm.controls['username'].setErrors({'error': true});
+            this.loginForm.controls['password'].setErrors({'error': true});
           } else {
-            alert('ok');
+            // if success show success toast and set user data in local storage
+            this.toastService.show('Login successful',5000, 'green');
+            localStorage.setItem('token', response.token);
+            localStorage.setItem('user', JSON.stringify(response.user));
+            this.router.navigate(['/']);
           }
         }
 

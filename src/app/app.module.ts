@@ -18,6 +18,10 @@ import {
 import { MzInputModule } from 'ngx-materialize';
 import { MzButtonModule } from 'ngx-materialize';
 import { HttpClientModule } from '@angular/common/http';
+import { HomeComponent } from './components/home/home.component';
+import {AuthGuard} from './core/auth.guard';
+import { NavBarComponent } from './components/nav-bar/nav-bar.component';
+import { NavFooterComponent } from './components/nav-footer/nav-footer.component';
 
 
 
@@ -27,14 +31,18 @@ import { HttpClientModule } from '@angular/common/http';
 
 const routes: Routes = [
   // Super Admin routes
-  { path: 'login', component: LoginComponent}
+  { path: 'login', component: LoginComponent},
+  { path: '', component: HomeComponent, canActivate: [AuthGuard]}
   ];
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent
+    LoginComponent,
+    HomeComponent,
+    NavBarComponent,
+    NavFooterComponent
   ],
   imports: [
     BrowserModule,

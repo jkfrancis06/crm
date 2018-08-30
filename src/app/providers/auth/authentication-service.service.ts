@@ -61,8 +61,8 @@ export class AuthenticationServiceService {
       password: password
     }, httpOptions)
       .pipe(
-        map(response => console.log(response)),
-        timeout(2500),
+        map(response => this.result = response),
+        timeout(60000), // set request timeout to 1 minutes
         catchError(error => of(
           800 // Is a network error
         ))

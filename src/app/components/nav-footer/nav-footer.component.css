@@ -1,0 +1,9 @@
+footer{
+  bottom: 0;
+  width: 100%;
+  position: fixed;
+}
+
+.page-footer{
+  background-color: #0065AC!important;
+}
