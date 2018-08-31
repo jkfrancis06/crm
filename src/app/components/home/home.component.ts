@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {any} from "codelyzer/util/function";
 
 @Component({
   selector: 'app-home',
@@ -17,7 +18,8 @@ export class HomeComponent implements OnInit {
     const d = new Date();
     const otherDate = new Date('2018-08-29 10:07:51');
     let hours = otherDate.getHours();
-    let minutes = otherDate.getMinutes();
+    let minutes: any;
+    minutes = otherDate.getMinutes();
     const seconds = otherDate.getSeconds();
     const ampm = hours >= 12 ? 'pm' : 'am';
     hours = hours % 12;
