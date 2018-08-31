@@ -12,7 +12,10 @@ import { LoginComponent } from './components/login/login.component';
 // Materialize modules
 
 import {
-  MzBaseModal, MzModalComponent, MzModalModule, MzSpinnerModule, MzToastModule,
+  MzBaseModal, MzFeatureDiscoveryModule, MzIconMdiModule, MzIconModule, MzModalComponent,
+  MzModalModule, MzNavbarModule, MzSidenavModule,
+  MzSpinnerModule,
+  MzToastModule,
   MzValidationModule
 } from 'ngx-materialize';
 import { MzInputModule } from 'ngx-materialize';
@@ -22,6 +25,8 @@ import { HomeComponent } from './components/home/home.component';
 import {AuthGuard} from './core/auth.guard';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { NavFooterComponent } from './components/nav-footer/nav-footer.component';
+import { ChangePasswordComponent } from './components/change-password/change-password.component';
+
 
 
 
@@ -32,7 +37,8 @@ import { NavFooterComponent } from './components/nav-footer/nav-footer.component
 const routes: Routes = [
   // Super Admin routes
   { path: 'login', component: LoginComponent},
-  { path: '', component: HomeComponent, canActivate: [AuthGuard]}
+  { path: '', component: HomeComponent, canActivate: [AuthGuard]},
+  { path: 'change-password', component: ChangePasswordComponent}
   ];
 
 
@@ -42,7 +48,8 @@ const routes: Routes = [
     LoginComponent,
     HomeComponent,
     NavBarComponent,
-    NavFooterComponent
+    NavFooterComponent,
+    ChangePasswordComponent
   ],
   imports: [
     BrowserModule,
@@ -55,6 +62,11 @@ const routes: Routes = [
     MzModalModule,
     MzSpinnerModule,
     MzToastModule,
+    MzFeatureDiscoveryModule,
+    MzIconModule,
+    MzIconMdiModule,
+    MzNavbarModule,
+    MzSidenavModule,
     //
     HttpClientModule,
     RouterModule.forRoot(routes),

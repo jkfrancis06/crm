@@ -20,12 +20,12 @@ export class LoginComponent implements OnInit {
   // error messages
   errorMessageResources = {
     username: {
-      required: 'Username is required.',
-      error: 'Invalid username or password.',
+      required: 'Veuillez renseigner ce champ.',
+      error: 'Nom d\'utilisateur ou mot de passe invalides.',
     },
     password: {
-      required: 'Password is required.',
-      error: 'Invalid username or password.',
+      required: 'Veuillez renseigner ce champ.',
+      error: 'Nom d\'utilisateur ou mot de passe invalides.',
     }
   };
 
@@ -41,7 +41,6 @@ export class LoginComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder,
               private authenticationService: AuthenticationServiceService,
-              private modalService: MzModalService,
               private toastService: MzToastService,
               private router: Router
   ) { }
@@ -72,14 +71,15 @@ export class LoginComponent implements OnInit {
           // if invalid password or username
           if (response.result === 0) {
             // show toast and forms to invalid
-            this.toastService.show('Invalid username or password',5000, 'red');
+            this.toastService.show('Nom d\'utilisateur ou mot de passe invalides.',5000, 'red');
             this.loginForm.controls['username'].setErrors({'error': true});
             this.loginForm.controls['password'].setErrors({'error': true});
           } else {
             // if success show success toast and set user data in local storage
-            this.toastService.show('Login successful',5000, 'green');
+            this.toastService.show('Connexion réussie',5000, 'green');
             localStorage.setItem('token', response.token);
             localStorage.setItem('user', JSON.stringify(response.user));
+            localStorage.setItem('must_change_password', response.must_change_password);
             this.router.navigate(['/']);
           }
         }
