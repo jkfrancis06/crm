@@ -2,7 +2,7 @@
   <div>
     <div class="row">
       <div class="col s6 m6 l6 offset-s2 offset-m4 offset-l4">
-        <img src="../../../../assets/img/s5_logo.png" class="form-logo-img">
+        <img src="../../../../assets/img/helpdesk.png" class="form-logo-img">
       </div>
       <div class="col s12 m5 l5  offset-m3 offset-l3">
         <div class="card z-depth-5">
@@ -36,7 +36,7 @@
                   </div>
 
                   <div class="row">
-                    <div class="col">
+                    <div class="col s6">
                       <button mz-button [disabled]="!loginForm.valid" type="submit">Connexion</button>
                     </div>
                   </div>
@@ -45,6 +45,10 @@
             </div>
           </form>
         </div>
+      </div>
+
+      <div class="col s6 m6 l6 offset-s2 offset-m4 offset-l4">
+        <img src="../../../../assets/img/s5_logo.png" style="height: 5em" class="form-logo-img">
       </div>
 
       <div *ngIf="loader == true" class="spinner-box">

@@ -2,9 +2,18 @@ footer{
   bottom: 0;
   width: 100%;
   position: fixed;
+  color: black;
 }
 
 
 .page-footer{
-  background-color: #0065AC!important;
+  background-color: white!important;
+}
+
+footer .footer-copyright {
+  height: 0em!important;
+}
+
+.page-footer .footer-copyright {
+  min-height: 26px!important;
 }

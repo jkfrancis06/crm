@@ -28,6 +28,12 @@
   opacity: 0.5;
 }
 
+img.form-logo-img {
+  height: 32px;
+}
+
+
+
 /*.spinner {*/
   /*position: absolute;*/
   /*left: 50%;*/

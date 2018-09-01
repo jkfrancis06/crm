@@ -66,20 +66,19 @@ export class LoginComponent implements OnInit {
         this.loader = false;
         if (response === 800) {
           // If network error
-          this.toastService.show('Network error. Please try again later',5000, 'red');
+          this.toastService.show('Erreur réseau. Veuillez réessayer plus tard',5000, 'red');
         } else {
           // if invalid password or username
           if (response.result === 0) {
             // show toast and forms to invalid
-            this.toastService.show('Nom d\'utilisateur ou mot de passe invalides.',5000, 'red');
-            this.loginForm.controls['username'].setErrors({'error': true});
-            this.loginForm.controls['password'].setErrors({'error': true});
+            this.toastService.show('Nom d\'utilisateur ou mot de passe invalides.',6000, 'red');
           } else {
             // if success show success toast and set user data in local storage
             this.toastService.show('Connexion réussie',5000, 'green');
             localStorage.setItem('token', response.token);
             localStorage.setItem('user', JSON.stringify(response.user));
             localStorage.setItem('must_change_password', response.must_change_password);
+            localStorage.setItem('droit', JSON.stringify(response.droit));
             this.router.navigate(['/']);
           }
         }

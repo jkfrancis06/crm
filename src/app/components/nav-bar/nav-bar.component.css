@@ -1,3 +1,35 @@
 .nav-bar {
+  background-color: white!important;
+}
+
+.user-view{
+  background: none;
+  background-position: -90px;
+  background-size: 400px;
+  padding: 0 !important;
+  margin-top: 1em;
+  margin-left: 1em!important;
+}
+
+
+.name{
+  font-weight: bold!important;
+  color: black!important;
+}
+
+.email{
+  font-size: small!important;
+  font-weight: bold!important;
+  color: black!important;
+}
+
+.active {
   background-color: #0065AC!important;
 }
+
+img.logo {
+  height: 54px;
+  margin-left: 2em;
+}
+
+

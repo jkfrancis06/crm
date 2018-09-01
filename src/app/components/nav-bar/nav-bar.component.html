@@ -1,36 +1,106 @@
-<mz-sidenav
-  [id]="'sidenav-demo'"
-  [collapseButtonId]="'btn-sidenav-demo'">
-  <mz-sidenav-header>
-    Sidenav header
-  </mz-sidenav-header>
-  <mz-sidenav-subheader>Link Subheader</mz-sidenav-subheader>
-  <mz-sidenav-link>
-    <a href="#">First Link</a>
-  </mz-sidenav-link>
-  <mz-sidenav-divider></mz-sidenav-divider>
-  <mz-sidenav-link [active]="true">
-    <a href="#">Active Link</a>
-  </mz-sidenav-link>
-  <mz-sidenav-divider></mz-sidenav-divider>
-  <mz-sidenav-link>
-    <a href="#" class="waves-effect">Second Link With Waves</a>
-  </mz-sidenav-link>
-</mz-sidenav>
+<aside>
+  <mz-sidenav #sidenav
+              [id]="'sidenav-demo'"
+              [collapseButtonId]="'btn-sidenav-demo'"
+              [fixed]="true">
+    <mz-sidenav-header>
+      <div class="user-view">
+        <img class="avatar" style="height: 3em; width: 19em" src="../../../../assets/img/helpdesk.png">
+        <!--<avatar [email]="user.c_prenom +' '+user.c_nom" [displayType]="'circle'"></avatar>-->
+        <div><span class="name">{{user.c_prenom}} {{user.c_nom}}</span></div>
+        <div>
+          <span class="email" style="white-space: nowrap; font-size: 2px; font-style: italic">Derniere connexion: {{last_login}}</span>
+        </div>
+      </div>
+    </mz-sidenav-header>
+
+
+    <mz-sidenav-divider></mz-sidenav-divider>
+
+    <mz-sidenav-link>
+      <a><i mz-icon [align]="'left'" [icon]="'dashboard'" [size]="'small'">
+      </i>Tableau de bord</a>
+    </mz-sidenav-link>
+
+    <mz-sidenav-divider *ngIf="droits.admin"></mz-sidenav-divider>
+
+    <mz-sidenav-collapsible *ngIf="droits.admin">
+      <mz-sidenav-collapsible-header>
+        <i style="margin-left: 15px"  mz-icon [align]="'left'" [icon]="'accessibility'" [size]="'small'">
+        </i>Administration
+      </mz-sidenav-collapsible-header>
+      <mz-sidenav-collapsible-content>
+        <mz-sidenav-link *ngIf="droits.admin.user">
+          <a href="#" class="waves-effect">Gestion des Utilisateurs</a>
+        </mz-sidenav-link>
+        <mz-sidenav-divider *ngIf="droits.admin.profile"></mz-sidenav-divider>
+        <mz-sidenav-link *ngIf="droits.admin.profile">
+          <a href="#" class="waves-effect">Gestion des Profils</a>
+        </mz-sidenav-link>
+        <mz-sidenav-divider *ngIf="droits.admin.log"></mz-sidenav-divider>
+        <mz-sidenav-link *ngIf="droits.admin.log">
+          <a href="#" class="waves-effect">Logs</a>
+        </mz-sidenav-link>
+      </mz-sidenav-collapsible-content>
+    </mz-sidenav-collapsible>
+
+    <mz-sidenav-divider *ngIf="droits.platform"></mz-sidenav-divider>
+
+    <mz-sidenav-link *ngIf="droits.platform">
+      <a><i mz-icon [align]="'left'" [icon]="'dns'" [size]="'small'">
+      </i>Plateforme</a>
+    </mz-sidenav-link>
+
+    <mz-sidenav-divider *ngIf="droits.client"></mz-sidenav-divider>
+
+    <mz-sidenav-link *ngIf="droits.client">
+      <a><i mz-icon [align]="'left'" [icon]="'group'" [size]="'small'">
+      </i>Client</a>
+    </mz-sidenav-link>
+
+
+    <mz-sidenav-divider *ngIf="droits.issues"></mz-sidenav-divider>
+
+    <mz-sidenav-link *ngIf="droits.issues">
+      <a><i mz-icon [align]="'left'" [icon]="'notifications'" [size]="'small'">
+      </i>Incidents</a>
+    </mz-sidenav-link>
+
+    <mz-sidenav-divider></mz-sidenav-divider>
+
+    <mz-sidenav-collapsible>
+      <mz-sidenav-collapsible-header>
+        <i style="margin-left: 15px" mz-icon [align]="'left'" [icon]="'person'" [size]="'small'">
+        </i>Mon compte
+      </mz-sidenav-collapsible-header>
+      <mz-sidenav-collapsible-content>
+        <mz-sidenav-link>
+          <a href="#" class="waves-effect">Changer de mot de passe</a>
+        </mz-sidenav-link>
+        <mz-sidenav-divider></mz-sidenav-divider>
+        <mz-sidenav-link>
+          <a href="#" class="waves-effect">Deconnexion</a>
+        </mz-sidenav-link>
+      </mz-sidenav-collapsible-content>
+    </mz-sidenav-collapsible>
+
+  </mz-sidenav>
+</aside>
 
 <header>
 
-  <div class="navbar-fixed">
+  <div class="navbar-fixed hide-on-large-only">
 
     <nav class="nav-bar">
       <div class="nav-wrapper">
-        <a href="#!" class="left brand-logo"><i id="btn-sidenav-demo" class="material-icons">menu</i>Plateforme</a>
-        <ul class="right ">
-          Dernier acces
-        </ul>
+        <a href="#!" class="left brand-logo"><i id="btn-sidenav-demo" style="color: black"  class="material-icons">menu</i>
+        </a>
       </div>
     </nav>
 
   </div>
 </header>
+
+
+
 

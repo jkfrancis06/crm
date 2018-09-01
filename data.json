@@ -1,0 +1,50 @@
+{
+  // droits admin
+
+  "admin": {
+    "user": {
+      "edit": true,
+      "list": true,
+      "add": true,
+      "delete": true
+    },
+    "profile": {
+      "edit": true,
+      "list": true,
+      "add": true,
+      "delete": true
+    },
+    "log": true
+  },
+
+  // platform
+
+  "platform": {
+    "n_a": {
+      "edit": true,
+      "list": true,
+      "add": true,
+      "delete": true
+    }
+  },
+
+  // client
+
+  "client": {
+    "n_a": {
+      "edit": true,
+      "list": true,
+      "add": true,
+      "delete": true
+    }
+  },
+
+  "incident": {
+    "n_a": {
+      "edit": true,
+      "list": true,
+      "add": true,
+      "delete": true
+    }
+  }
+}

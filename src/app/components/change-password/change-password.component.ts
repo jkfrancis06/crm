@@ -5,6 +5,7 @@ import {MzToastService} from 'ngx-materialize';
 import {ActivatedRoute, Route, Router} from '@angular/router';
 import {PasswordForm} from '../../models/password-form';
 import {PasswordValidation} from '../../validator/password-validation';
+import {RestApiRequestService} from "../../providers/rest/rest-api-request.service";
 
 
 @Component({
@@ -45,7 +46,7 @@ export class ChangePasswordComponent implements OnInit, AfterViewInit {
   is_feature_open: boolean;
 
   constructor(private formBuilder: FormBuilder,
-              private authenticationService: AuthenticationServiceService,
+              private restApiService: RestApiRequestService,
               private toastService: MzToastService,
               private dataRoute: ActivatedRoute,
               private router: Router) {
@@ -56,9 +57,8 @@ export class ChangePasswordComponent implements OnInit, AfterViewInit {
     // check if is first start  password change or not
     this.first_start = localStorage.getItem('must_change_password');
 
-    if (this.first_start === 1) {
-      this.user = JSON.parse(localStorage.getItem('must_change_password'));
-    }
+    this.user = JSON.parse(localStorage.getItem('user'));
+
     // login form fields constraints
     this.passwordForm = this.formBuilder.group({
       password: [this.change_password.password, Validators.required],
@@ -70,10 +70,6 @@ export class ChangePasswordComponent implements OnInit, AfterViewInit {
     }, {
       validator: PasswordValidation.MatchPassword
     });
-
-    this.user = JSON.parse(localStorage.getItem('user'));
-
-
   }
 
   ngAfterViewInit() {
@@ -90,6 +86,35 @@ export class ChangePasswordComponent implements OnInit, AfterViewInit {
 
 
   onSubmit() {
+
+    if (!this.passwordForm.valid) {
+      return;
+    }
+    // show loader
+    this.loader = true;
+
+    const isActive =  localStorage.getItem('must_change_password');
+
+    this.restApiService.changePassword(this.user.c_id, this.passwordForm.value.password, this.passwordForm.value.new_password).subscribe(response => {
+      console.log(response);
+
+      if (response === 800) { // timeout error
+        this.toastService.show('Erreur réseau. Veuillez réessayer plus tard', 5000, 'red');
+      }
+      if (response.status === 400) { // bad password
+        this.passwordForm.controls['password'].setErrors({'error': true});
+        this.toastService.show(response.error.comment, 5000, 'red');
+      }
+      if (response.result === 1 ) { // password changed successfully
+        if (isActive === '1') { // if first login
+          localStorage.setItem('must_change_password', '0');
+        }
+        this.toastService.show('Mot de passe modifié avec success', 5000, 'green');
+        this.router.navigate(['/']);
+      }
+
+      this.loader = false;
+    });
 
   }
 

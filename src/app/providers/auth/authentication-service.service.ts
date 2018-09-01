@@ -56,6 +56,10 @@ export class AuthenticationServiceService {
       })
     };
 
+    // const input = new FormData();
+    // input.append('login', username );
+    // input.append('password', password);
+
     return this.httpClient.post(this.SERVER_ADDRESS + '/crm/index.php/admin/login', {
       login: username,
       password: password
@@ -68,14 +72,6 @@ export class AuthenticationServiceService {
         ))
       );
 
-
-
-    // return this.httpClient.post(this.SERVER_ADDRESS + '/crm/index.php/admin/login', {
-    //   login: username,
-    //   password: password
-    // }, httpOptions)
-    //   .pipe(
-    //     map(response => console.log(response))
   }
 
 

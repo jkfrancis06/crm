@@ -26,6 +26,7 @@ import {AuthGuard} from './core/auth.guard';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { NavFooterComponent } from './components/nav-footer/nav-footer.component';
 import { ChangePasswordComponent } from './components/change-password/change-password.component';
+import {AvatarModule} from 'ng2-avatar';
 
 
 
@@ -55,6 +56,7 @@ const routes: Routes = [
     BrowserModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
+    AvatarModule,
     //
     MzValidationModule,
     MzInputModule,
