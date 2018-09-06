@@ -5,7 +5,7 @@
               [fixed]="true">
     <mz-sidenav-header>
       <div class="user-view">
-        <img class="avatar" style="height: 3em; width: 19em" src="../../../../assets/img/helpdesk.png">
+        <img class="avatar" style="height: 3em; width: 16em" src="../../../../assets/img/helpdesk-1.png">
         <!--<avatar [email]="user.c_prenom +' '+user.c_nom" [displayType]="'circle'"></avatar>-->
         <div><span class="name">{{user.c_prenom}} {{user.c_nom}}</span></div>
         <div>
@@ -18,7 +18,7 @@
     <mz-sidenav-divider></mz-sidenav-divider>
 
     <mz-sidenav-link>
-      <a><i mz-icon [align]="'left'" [icon]="'dashboard'" [size]="'small'">
+      <a style="margin-left: 1em" routerLink="/"><i mz-icon [align]="'left'" [icon]="'dashboard'" [size]="'small'">
       </i>Tableau de bord</a>
     </mz-sidenav-link>
 
@@ -31,15 +31,15 @@
       </mz-sidenav-collapsible-header>
       <mz-sidenav-collapsible-content>
         <mz-sidenav-link *ngIf="droits.admin.user">
-          <a href="#" class="waves-effect">Gestion des Utilisateurs</a>
+          <a style="margin-left: 1em" routerLink="/admin/user-manage" class="waves-effect">Gestion des Utilisateurs</a>
         </mz-sidenav-link>
         <mz-sidenav-divider *ngIf="droits.admin.profile"></mz-sidenav-divider>
         <mz-sidenav-link *ngIf="droits.admin.profile">
-          <a href="#" class="waves-effect">Gestion des Profils</a>
+          <a style="margin-left: 1em" href="#" class="waves-effect">Gestion des Profils</a>
         </mz-sidenav-link>
         <mz-sidenav-divider *ngIf="droits.admin.log"></mz-sidenav-divider>
         <mz-sidenav-link *ngIf="droits.admin.log">
-          <a href="#" class="waves-effect">Logs</a>
+          <a style="margin-left: 1em" href="#" class="waves-effect">Logs</a>
         </mz-sidenav-link>
       </mz-sidenav-collapsible-content>
     </mz-sidenav-collapsible>

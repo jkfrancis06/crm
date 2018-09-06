@@ -12,7 +12,8 @@ import { LoginComponent } from './components/login/login.component';
 // Materialize modules
 
 import {
-  MzBaseModal, MzFeatureDiscoveryModule, MzIconMdiModule, MzIconModule, MzModalComponent,
+  MzBaseModal, MzCheckboxModule, MzCollapsibleModule, MzFeatureDiscoveryModule, MzIconMdiModule, MzIconModule,
+  MzModalComponent,
   MzModalModule, MzNavbarModule, MzSidenavModule,
   MzSpinnerModule,
   MzToastModule,
@@ -26,6 +27,9 @@ import {AuthGuard} from './core/auth.guard';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { NavFooterComponent } from './components/nav-footer/nav-footer.component';
 import { ChangePasswordComponent } from './components/change-password/change-password.component';
+import {ChartsModule} from "ng2-charts";
+import { UserManageComponent } from './components/user-manage/user-manage.component';
+import { CreateUserComponent } from './components/create-user/create-user.component';
 
 
 
@@ -38,7 +42,9 @@ const routes: Routes = [
   // Super Admin routes
   { path: 'login', component: LoginComponent},
   { path: '', component: HomeComponent, canActivate: [AuthGuard]},
-  { path: 'change-password', component: ChangePasswordComponent}
+  { path: 'change-password', component: ChangePasswordComponent},
+  { path: 'admin/user-manage', component: UserManageComponent, canActivate: [AuthGuard]},
+  { path: 'admin/create-user', component: CreateUserComponent, canActivate: [AuthGuard]}
   ];
 
 
@@ -49,12 +55,15 @@ const routes: Routes = [
     HomeComponent,
     NavBarComponent,
     NavFooterComponent,
-    ChangePasswordComponent
+    ChangePasswordComponent,
+    UserManageComponent,
+    CreateUserComponent
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
+    ChartsModule,
     //
     MzValidationModule,
     MzInputModule,
@@ -67,6 +76,8 @@ const routes: Routes = [
     MzIconMdiModule,
     MzNavbarModule,
     MzSidenavModule,
+    MzCollapsibleModule,
+    MzCheckboxModule,
     //
     HttpClientModule,
     RouterModule.forRoot(routes),

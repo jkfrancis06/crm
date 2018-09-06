@@ -1,0 +1,84 @@
+<app-nav-bar></app-nav-bar>
+
+<div *ngIf="loader == true" class="spinner-box">
+  <mz-spinner [color]="'blue'" [size]="'big'" style="position: absolute;left: 50%;top: 40%;">
+  </mz-spinner>
+</div>
+
+<header>
+  <nav class="top-nav" style="background-color: #34539D; color: white; margin-bottom: 3em">
+    <div class="container" style="text-align: center">
+      <div class="nav-wrapper">
+        <a class="page-title">Créer un utilisateur</a>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<main>
+
+
+  <div class="row">
+    <div class="col s12">
+      <form [formGroup]="userForm" (ngSubmit)="onSubmit()" novalidate>
+        <div class="row">
+          <div class="col s12">
+            <div class="row">
+              <mz-input-container class="col s6">
+                <input mz-input mz-validation required
+                       id="lastname"
+                       formControlName="lastname"
+                       type="text"
+                       [errorMessageResource]="errorMessageResources.lastname"
+                       [label]="'Prénoms'"/>
+              </mz-input-container>
+              <mz-input-container class="col s6">
+                <input mz-input mz-validation required
+                       id="firstname"
+                       formControlName="firstname"
+                       type="text"
+                       [errorMessageResource]="errorMessageResources.firstname"
+                       [label]="'Nom'"/>
+              </mz-input-container>
+            </div>
+
+
+            <div class="row">
+              <mz-input-container class="col s4">
+                <input mz-input mz-validation required
+                       id="email"
+                       formControlName="email"
+                       type="email"
+                       [errorMessageResource]="errorMessageResources.email"
+                       [label]="'Adresse email'"/>
+              </mz-input-container>
+              <mz-input-container class="col s6">
+                <input mz-input mz-validation required
+                       id="telephone"
+                       formControlName="telephone"
+                       type="text"
+                       [errorMessageResource]="errorMessageResources.telephone"
+                       [label]="'Numéro de téléphone'"/>
+              </mz-input-container>
+              <mz-checkbox-container style="margin-top: 1em" class="col s4">
+                <input mz-checkbox
+                       id="checkbox-is-client"
+                       formControlName="isClient"
+                       type="checkbox"
+                       [filledIn]="true"
+                       [label]="'Est client?'">
+              </mz-checkbox-container>
+            </div>
+
+            <div class="row">
+              <div class="col s6">
+                <button mz-button [disabled]="!userForm.valid" type="submit">Connexion</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+</main>

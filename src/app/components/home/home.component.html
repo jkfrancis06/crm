@@ -1,7 +1,69 @@
 <app-nav-bar></app-nav-bar>
 
+  <header>
+    <nav class="top-nav" style="background-color: #34539D; color: white; margin-bottom: 3em">
+      <div class="container" style="text-align: center">
+        <div class="nav-wrapper">
+          <a class="page-title">Tableau de bord</a>
+        </div>
+      </div>
+    </nav>
+  </header>
+
   <main>
-    <div class="container">
+    <div>
+      <div class="row">
+        <div>
+          <div  style="display: block;">
+            <canvas height="60"  baseChart
+                    [data]="pieChartData"
+                    [labels]="pieChartLabels"
+                    [colors]="pieChartColor"
+                    [chartType]="pieChartType"
+                    (chartHover)="chartHovered($event)"
+                    (chartClick)="chartClicked($event)"></canvas>
+          </div>
+        </div>
+
+
+        <div class="col s12 m12 l12" style="margin-top: 3em">
+          <table class="bordered striped highlight centered responsive-table">
+            <thead>
+              <tr>
+                <th>Libelle</th>
+                <th>Compte de facturation</th>
+                <th>Criticité</th>
+                <th>Technicien traitant</th>
+                <th>Date d'ouverture</th>
+                <th>Client</th>
+                <th>Declarant</th>
+                <th>Statut</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr *ngFor="let last_issue of last_issue">
+                <td>{{last_issue.c_libelle}}</td>
+                <td>{{last_issue.c_compte_fact}}</td>
+                <td>
+                  <span *ngIf="last_issue.c_criticite == 'Basique'" class="badge green" style="color: white" data-badge-caption="">{{last_issue.c_criticite}}</span>
+                  <span *ngIf="last_issue.c_criticite == 'Moyen'" class="badge orange" style="color: white" data-badge-caption="">{{last_issue.c_criticite}}</span>
+                  <span *ngIf="last_issue.c_criticite == 'Critique'" class="badge red" style="color: white" data-badge-caption="">{{last_issue.c_criticite}}</span>
+                </td>
+                <td>{{last_issue.c_tech_traitant}}</td>
+                <td>{{last_issue.c_date_ouv}}</td>
+                <td>{{last_issue.c_client}}</td>
+                <td>{{last_issue.c_declarant}}</td>
+                <td>
+                  <span *ngIf="last_issue.c_statut == 'Ouvert'" class="badge red" style="color: white" data-badge-caption="">{{last_issue.c_statut}}</span>
+                  <span *ngIf="last_issue.c_statut == 'Fermé'" class="badge green" style="color: white" data-badge-caption="">{{last_issue.c_statut}}</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+        </div>
+      </div>
 
     </div>
   </main>

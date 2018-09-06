@@ -13,6 +13,8 @@ export class RestApiRequestService {
 
   public token: string;
   public changePasswordUrl = '/crm/index.php/admin/change_password';
+  public dashboardUrl = '/crm/index.php/dashboard';
+  public userListUrl = '/crm/index.php/admin/user_list';
   SERVER_ADDRESS: string;
   result: any;
 
@@ -23,7 +25,6 @@ export class RestApiRequestService {
     private toastService: MzToastService,
   ) {
     this.SERVER_ADDRESS = this.constProvider.SERVER_ADDRESS;
-    this.token = localStorage.getItem('token');
   }
 
 
@@ -40,7 +41,8 @@ export class RestApiRequestService {
         'Access-Control-Allow-Origin': '*'
       })
     };
-    let input = new FormData();
+    this.token = localStorage.getItem('token');
+    const input = new FormData();
     input.append('token', this.token)
     input.append('user_id', user_id)
     input.append('old_password', old_password)
@@ -56,6 +58,64 @@ export class RestApiRequestService {
           error => of(
             this.handleError(error)
         ))
+      );
+
+  }
+
+
+  // Load dashboard data
+
+  loadDashboardData(): Observable<any> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Access-Control-Allow-Origin': '*'
+      })
+    };
+
+    this.token = localStorage.getItem('token');
+
+    console.log(this.token)
+
+    const input = new FormData();
+    input.append('token', this.token)
+
+    return this.httpClient.post(this.SERVER_ADDRESS + '' + this.dashboardUrl, input, httpOptions)
+      .pipe(
+        map(response => this.result = response),
+        timeout(60000), // set request timeout to 1 minutes
+        catchError(
+          error => of(
+            this.handleError(error)
+          ))
+      );
+
+  }
+
+
+
+  // Load user list
+
+  loadUserList(): Observable<any> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Access-Control-Allow-Origin': '*'
+      })
+    };
+
+    this.token = localStorage.getItem('token');
+    console.log(this.token)
+
+    const input = new FormData();
+    input.append('token', this.token)
+
+    return this.httpClient.post(this.SERVER_ADDRESS + '' + this.userListUrl, input, httpOptions)
+      .pipe(
+        map(response => this.result = response),
+        timeout(60000), // set request timeout to 1 minutes
+        catchError(
+          error => of(
+            this.handleError(error)
+          ))
       );
 
   }
