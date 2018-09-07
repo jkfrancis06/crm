@@ -14,7 +14,7 @@ import { LoginComponent } from './components/login/login.component';
 import {
   MzBaseModal, MzCheckboxModule, MzCollapsibleModule, MzFeatureDiscoveryModule, MzIconMdiModule, MzIconModule,
   MzModalComponent,
-  MzModalModule, MzNavbarModule, MzSidenavModule,
+  MzModalModule, MzNavbarModule, MzSelectModule, MzSidenavModule,
   MzSpinnerModule,
   MzToastModule,
   MzValidationModule
@@ -27,9 +27,11 @@ import {AuthGuard} from './core/auth.guard';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { NavFooterComponent } from './components/nav-footer/nav-footer.component';
 import { ChangePasswordComponent } from './components/change-password/change-password.component';
-import {ChartsModule} from "ng2-charts";
+import {ChartsModule} from 'ng2-charts';
 import { UserManageComponent } from './components/user-manage/user-manage.component';
 import { CreateUserComponent } from './components/create-user/create-user.component';
+import { EditUserComponent } from './components/edit-user/edit-user.component';
+// import { EditUserComponent } from './components/edit-user/edit-user.component';
 
 
 
@@ -44,7 +46,8 @@ const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [AuthGuard]},
   { path: 'change-password', component: ChangePasswordComponent},
   { path: 'admin/user-manage', component: UserManageComponent, canActivate: [AuthGuard]},
-  { path: 'admin/create-user', component: CreateUserComponent, canActivate: [AuthGuard]}
+  { path: 'admin/create-user', component: CreateUserComponent, canActivate: [AuthGuard]},
+  { path: 'admin/edit-user/:id', component: EditUserComponent, canActivate: [AuthGuard]}
   ];
 
 
@@ -57,7 +60,8 @@ const routes: Routes = [
     NavFooterComponent,
     ChangePasswordComponent,
     UserManageComponent,
-    CreateUserComponent
+    CreateUserComponent,
+    EditUserComponent
   ],
   imports: [
     BrowserModule,
@@ -78,6 +82,7 @@ const routes: Routes = [
     MzSidenavModule,
     MzCollapsibleModule,
     MzCheckboxModule,
+    MzSelectModule,
     //
     HttpClientModule,
     RouterModule.forRoot(routes),

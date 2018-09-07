@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {User} from '../../models/user';
-import {RestApiRequestService} from '../../providers/rest/rest-api-request.service';
-import {MzToastService} from 'ngx-materialize';
-import {Router} from '@angular/router';
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {User} from "../../models/user";
+import {RestApiRequestService} from "../../providers/rest/rest-api-request.service";
+import {MzToastService} from "ngx-materialize";
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
-  selector: 'app-create-user',
-  templateUrl: './create-user.component.html',
-  styleUrls: ['./create-user.component.css']
+  selector: 'app-edit-user',
+  templateUrl: './edit-user.component.html',
+  styleUrls: ['./edit-user.component.css']
 })
-export class CreateUserComponent implements OnInit {
+export class EditUserComponent implements OnInit {
 
   userForm: FormGroup;
   submitted = false;
@@ -52,17 +52,24 @@ export class CreateUserComponent implements OnInit {
       required: 'Veuillez renseigner ce champ.'
     }
   };
-
   clients: any;
-
   loader = false;
+  sub: any;
+  id: any;
 
   constructor(private formBuilder: FormBuilder,
               private restApiService: RestApiRequestService,
               private toastService: MzToastService,
-              private router: Router) { }
+              private router: Router,
+              private route: ActivatedRoute) { }
 
   ngOnInit() {
+
+    this.sub = this.route.params.subscribe(params => {
+      this.id = params['id'];
+    });
+    console.log(this.id);
+
     // form fields constraints
     this.userForm = this.formBuilder.group({
       firstname: [this.user.firstname, Validators.required],
@@ -157,5 +164,4 @@ export class CreateUserComponent implements OnInit {
     });
 
   }
-
 }

@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import {any} from 'codelyzer/util/function';
 import {RestApiRequestService} from '../../providers/rest/rest-api-request.service';
 import {MzToastService} from 'ngx-materialize';
 

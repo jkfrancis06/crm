@@ -30,6 +30,7 @@
           <th>Derniere connexion</th>
           <th>Derniere modification</th>
           <th>Statut</th>
+          <th>Action</th>
         </tr>
         </thead>
 
@@ -46,6 +47,18 @@
             <span *ngIf="user.c_statut == '0'" class="badge orange" style="color: white" data-badge-caption="">Réinitialisé</span>
             <span *ngIf="user.c_statut == '1'" class="badge green" style="color: white" data-badge-caption="">Activé</span>
             <span *ngIf="user.c_statut == '99'" class="badge red" style="color: white" data-badge-caption="">Désactivé</span>
+          </td>
+          <td>
+            <div class="row">
+              <div class="col s6">
+                <a [routerLink]="['/admin/edit-user/',user.c_id]" class="waves-effect waves-light btn">
+                  <i class="material-icons">mode_edit</i>
+                </a>
+              </div>
+              <!--<div class="col s6">-->
+                <!--<a class="waves-effect waves-light btn">button</a>-->
+              <!--</div>-->
+            </div>
           </td>
         </tr>
         </tbody>

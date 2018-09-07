@@ -3,5 +3,7 @@ export class User {
   lastname?: string;
   email?: string;
   telephone?: string;
-  isClient?: string;
+  isClient?: any;
+  client?: any;
+  profile?: any;
 }
