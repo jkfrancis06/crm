@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {User} from "../../models/user";
-import {RestApiRequestService} from "../../providers/rest/rest-api-request.service";
-import {MzToastService} from "ngx-materialize";
-import {ActivatedRoute, Router} from "@angular/router";
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {User} from '../../models/user';
+import {RestApiRequestService} from '../../providers/rest/rest-api-request.service';
+import {MzToastService} from 'ngx-materialize';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector: 'app-edit-user',
@@ -16,15 +16,18 @@ export class EditUserComponent implements OnInit {
   submitted = false;
 
 
-  user: User = {
+  user = {
     firstname: '',
     lastname: '',
     email: '',
     telephone: '',
     isClient: false,
     client: '',
-    profile: [],
-  }
+    profile: '',
+    isReset: false,
+  };
+
+  temp_user: any;
 
   // error messages
   errorMessageResources = {
@@ -52,10 +55,12 @@ export class EditUserComponent implements OnInit {
       required: 'Veuillez renseigner ce champ.'
     }
   };
-  clients: any;
+  users: any;
+  profiles: any;
   loader = false;
   sub: any;
   id: any;
+  usr: any;
 
   constructor(private formBuilder: FormBuilder,
               private restApiService: RestApiRequestService,
@@ -69,7 +74,6 @@ export class EditUserComponent implements OnInit {
       this.id = params['id'];
     });
     console.log(this.id);
-
     // form fields constraints
     this.userForm = this.formBuilder.group({
       firstname: [this.user.firstname, Validators.required],
@@ -79,9 +83,8 @@ export class EditUserComponent implements OnInit {
         Validators.required,
         Validators.minLength(7),
       ])],
-      isClient: [this.user.isClient],
-      client: [this.user.client],
       profile: [this.user.profile, Validators.required],
+      isReset: [this.user.isReset],
     });
 
 
@@ -89,28 +92,13 @@ export class EditUserComponent implements OnInit {
 
     this.loader = true;
 
-    this.restApiService.loadClientList().subscribe(response => {
 
-      // this.loader = false;
-      if (response === 800) {
-
-        // If network error
-        this.toastService.show('Erreur réseau. Veuillez réessayer plus tard', 5000, 'red');
-      }
-
-      if (response.result === 1) {
-        this.clients = response.clients;
-        console.log(this.clients);
-      }
-
-    });
 
     // get profile list from the server
 
     this.restApiService.loadProfileList().subscribe(response => {
 
-      this.loader = false;
-
+      console.log(response);
       // this.loader = false;
       if (response === 800) {
 
@@ -119,11 +107,55 @@ export class EditUserComponent implements OnInit {
       }
 
       if (response.result === 1) {
-        this.user.profile = response.profil;
-        console.log(this.user);
+        this.profiles = response.profil;
+
+        this.restApiService.loadUserList().subscribe(res => {
+
+
+          this.loader = false;
+
+          // this.loader = false;
+          if (res === 800) {
+
+            // If network error
+            this.toastService.show('Erreur réseau. Veuillez réessayer plus tard', 5000, 'red');
+          }
+
+          if (res.result === 1) { // if success
+            console.log(res);
+            // get user from id
+            this.users = res.users;
+            console.log(this.users);
+            for (let i = 0; i < this.users.length; i++) {
+              if (this.users[i].c_id === this.id) {
+                this.temp_user = this.users[i];
+                // get profile from profile id;
+                for (let j = 0; j < this.profiles.length; j++ ) {
+                  if (this.profiles[j].c_id === this.temp_user.c_id_pro) {
+                    this.temp_user.profile = this.profiles[j];
+                    console.log(this.temp_user);
+                    const usr = {
+                      firstname: this.temp_user.c_prenom,
+                      lastname: this.temp_user.c_nom,
+                      email: this.temp_user.c_login,
+                      telephone: this.temp_user.c_tel,
+                      profile: this.temp_user.profile,
+                      isReset: false
+                    };
+                    this.userForm.setValue(usr);
+                  }
+                }
+              }
+            }
+
+          }
+
+        });
       }
 
     });
+
+
 
   }
 
@@ -135,13 +167,13 @@ export class EditUserComponent implements OnInit {
 
     console.log(this.userForm.value);
 
-    this.loader = true
+    this.loader = true;
 
-    this.restApiService.createUser(this.userForm.value).subscribe(response => {
+    this.restApiService.editUser(this.userForm.value, this.temp_user.c_id).subscribe(response => {
 
-      console.log(response)
+      console.log(response);
 
-      this.loader = false
+      this.loader = false;
 
       // this.loader = false;
       if (response === 800) {

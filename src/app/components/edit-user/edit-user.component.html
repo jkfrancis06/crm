@@ -77,7 +77,7 @@
                         [errorMessageResource]="errorMessageResources.profile"
                         [label]="'Profil'"
                         [placeholder]="'Choisir un profil'">
-                  <option *ngFor="let profil of user.profile" [ngValue]="profil">{{ profil.c_libelle }}</option>
+                  <option *ngFor="let profil of profiles" [ngValue]="profil" >{{ profil.c_libelle }}</option>
                 </select>
               </mz-select-container>
             </div>
@@ -86,28 +86,15 @@
             <div class="row">
               <mz-checkbox-container style="margin-top: 1em" class="col s12 ">
                 <input mz-checkbox
-                       id="checkbox-is-client"
-                       formControlName="isClient"
+                       id="checkbox-is-reset"
+                       formControlName="isReset"
                        type="checkbox"
                        [filledIn]="true"
                        checked
-                       [label]="'Est client?'">
+                       [label]="'Reinitialiser le mot de passe'">
               </mz-checkbox-container>
             </div>
 
-            <div class="row">
-              <mz-select-container class="col s12 ">
-                <select mz-select mz-validation required
-                        id="select-client-sector"
-                        formControlName="client"
-                        [errorMessageResource]="errorMessageResources.client"
-                        [formControlDisabled]="!userForm.controls['isClient'].value"
-                        [label]="'Client'"
-                        [placeholder]="'Selectionner un client'">
-                  <option *ngFor="let client of clients" [ngValue]="client">{{ client.c_nom }}</option>
-                </select>
-              </mz-select-container>
-            </div>
 
             <div class="row">
               <div class="col s6">

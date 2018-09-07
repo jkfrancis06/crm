@@ -19,57 +19,89 @@
 
   <div class="row">
     <div class="col s12 m12 l12" style="margin-top: 3em">
-      <table class="bordered striped highlight centered responsive-table">
-        <thead>
-        <tr>
-          <th>Nom</th>
-          <th>Prénoms</th>
-          <th>Libellé</th>
-          <th>Téléphone</th>
-          <th>Login</th>
-          <th>Derniere connexion</th>
-          <th>Derniere modification</th>
-          <th>Statut</th>
-          <th>Action</th>
-        </tr>
-        </thead>
 
-        <tbody>
-        <tr *ngFor="let user of users">
-          <td>{{user.c_nom}}</td>
-          <td>{{user.c_prenom}}</td>
-          <td>{{user.c_libelle}}</td>
-          <td>{{user.c_tel}}</td>
-          <td>{{user.c_login}}</td>
-          <td>{{user.c_date_con}}</td>
-          <td>{{user.c_date_mod}}</td>
-          <td>
-            <span *ngIf="user.c_statut == '0'" class="badge orange" style="color: white" data-badge-caption="">Réinitialisé</span>
-            <span *ngIf="user.c_statut == '1'" class="badge green" style="color: white" data-badge-caption="">Activé</span>
-            <span *ngIf="user.c_statut == '99'" class="badge red" style="color: white" data-badge-caption="">Désactivé</span>
-          </td>
-          <td>
-            <div class="row">
-              <div class="col s6">
-                <a [routerLink]="['/admin/edit-user/',user.c_id]" class="waves-effect waves-light btn">
+
+
+
+      <mz-collapsible
+        [mode]="'accordion'"
+        [onClose]="closeFunctionCallback"
+        [onOpen]="openFunctionCallback"
+        [popout]="true">
+        <mz-collapsible-item *ngFor="let user of users; let i = index" >
+          <mz-collapsible-item-header style="width:100%;">
+            <div class="left">
+              {{user.c_nom}} {{user.c_prenom}}
+            </div>
+
+            <div class="right" style="margin-top: -7px;font-size: 20px">
+              <div>
+                <a style="margin-left: 1em" *ngIf="permissions.edit_user" [routerLink]="['/admin/edit-user/',user.c_id]" class="waves-effect waves-light">
                   <i class="material-icons">mode_edit</i>
                 </a>
+                <a *ngIf="permissions.delete_user" (click)="removeUser(user.c_id, i)" class="waves-effect waves-light">
+                  <i class="material-icons">delete</i>
+                </a>
               </div>
-              <!--<div class="col s6">-->
-                <!--<a class="waves-effect waves-light btn">button</a>-->
-              <!--</div>-->
             </div>
-          </td>
-        </tr>
-        </tbody>
-      </table>
+
+            <div class="right">
+              <span *ngIf="user.c_statut == '0'" class="badge orange" style="color: white" data-badge-caption="">Réinitialisé</span>
+              <span *ngIf="user.c_statut == '1'" class="badge green" style="color: white" data-badge-caption="">Activé</span>
+              <span *ngIf="user.c_statut == '99'" class="badge red" style="color: white" data-badge-caption="">Désactivé</span>
+
+            </div>
+
+          </mz-collapsible-item-header>
+          <mz-collapsible-item-body >
+
+            <div class="row" style="text-align: center">
+
+              <table>
+                <tbody>
+                <tr>
+                  <td style="font-weight: bold">Nom:</td>
+                  <td>{{user.c_nom}}</td>
+                </tr>
+                <tr>
+                  <td style="font-weight: bold">Prénoms:</td>
+                  <td>{{user.c_prenom}}</td>
+                </tr>
+                <tr>
+                  <td style="font-weight: bold">Libellé:</td>
+                  <td>{{user.c_libelle}}</td>
+                </tr>
+                <tr>
+                  <td style="font-weight: bold">Numéro de telephone:</td>
+                  <td> {{user.c_tel}}</td>
+                </tr>
+                <tr>
+                  <td style="font-weight: bold">Login:</td>
+                  <td> {{user.c_login}} </td>
+                </tr>
+                <tr>
+                  <td style="font-weight: bold">Derniere connexion:</td>
+                  <td>{{user.c_date_con}}</td>
+                </tr>
+                <tr>
+                  <td style="font-weight: bold">Derniere modification: </td>
+                  <td> {{user.c_date_mod}}</td>
+                </tr>
+                </tbody>
+              </table>
+
+            </div>
+
+          </mz-collapsible-item-body>
+        </mz-collapsible-item>
+      </mz-collapsible>
 
     </div>
   </div>
 
 
 
-  <div class="fixed-action-btn">
+  <div class="fixed-action-btn" *ngIf="permissions.add_user">
     <a routerLink="/admin/create-user" class="btn-floating btn-large" style="background-color: #3A439B">
       <i class="large material-icons">add</i>
     </a>

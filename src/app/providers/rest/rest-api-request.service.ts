@@ -18,6 +18,8 @@ export class RestApiRequestService {
   public clientListUrl = '/crm/index.php/client/client_list';
   public userAddUrl = '/crm/index.php/admin/user_add';
   public profileListUrl = '/crm/index.php/admin/profil_list';
+  public editUserUrl = '/crm/index.php/admin/user_edit';
+  public deleteUserUrl = '/crm/index.php/admin/user_delete';
 
 
   SERVER_ADDRESS: string;
@@ -187,7 +189,7 @@ export class RestApiRequestService {
 
   // create user
 
-  createUser(client): Observable<any> {
+  createUser(user): Observable<any> {
     const httpOptions = {
       headers: new HttpHeaders({
         'Access-Control-Allow-Origin': '*'
@@ -197,43 +199,23 @@ export class RestApiRequestService {
     this.token = localStorage.getItem('token');
     console.log(this.token);
 
-    const isclient: any = client.isClient ? 1 : 0 ;
+    const isclient: any = user.isClient ? 1 : 0 ;
 
 
     const input = new FormData();
     input.append('token', this.token);
-    input.append('nom', client.lastname);
-    input.append('prenom', client.firstname);
-    input.append('mail', client.email);
-    input.append('tel', client.telephone);
-    input.append('isClient', isclient );
-    input.append('profil_id', client.profile.c_id);
+    input.append('nom', user.lastname);
+    input.append('prenom', user.firstname);
+    input.append('mail', user.email);
+    input.append('tel', user.telephone);
+    input.append('isClient', user );
+    input.append('profil_id', user.profile.c_id);
 
-    console.log(client.isClient ? 1 : 0);
+    console.log(user.isClient ? 1 : 0);
 
     if (isclient === 1) {
-      input.append('client_id', client.client.c_id);
+      input.append('client_id', user.client.c_id);
     }
-
-
-    // client
-    //   :
-    // {c_id: 1, c_nom: "Comores Télécom"}
-    // email
-    //   :
-    //   "jkfrancis06@gmail.com"
-    // firstname
-    //   :
-    //   "francis"
-    // isClient
-    //   :
-    //   true
-    // lastname
-    //   :
-    //   "agbessi"
-    // telephone
-    //   :
-    //   "99105978"
 
     console.log();
 
@@ -248,6 +230,78 @@ export class RestApiRequestService {
       );
 
   }
+
+
+  // edit user
+
+  editUser(user, user_id): Observable<any> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Access-Control-Allow-Origin': '*'
+      })
+    };
+
+    this.token = localStorage.getItem('token');
+    console.log(this.token);
+
+    const isReset: any = user.isReset ? 1 : 0 ;
+
+
+    const input = new FormData();
+    input.append('token', this.token);
+    input.append('user_id', user_id);
+    input.append('nom', user.lastname);
+    input.append('prenom', user.firstname);
+    input.append('isReset', isReset );
+    input.append('profil_id', user.profile.c_id);
+
+    console.log(user.isReset ? 1 : 0);
+
+
+    return this.httpClient.post(this.SERVER_ADDRESS + '' + this.editUserUrl, input, httpOptions)
+      .pipe(
+        map(response => this.result = response),
+        timeout(60000), // set request timeout to 1 minutes
+        catchError(
+          error => of(
+            this.handleError(error)
+          ))
+      );
+
+  }
+
+
+
+  // delete user
+
+  deleteUser(user_id): Observable<any> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Access-Control-Allow-Origin': '*'
+      })
+    };
+
+    this.token = localStorage.getItem('token');
+    console.log(this.token);
+
+
+    const input = new FormData();
+    input.append('token', this.token);
+    input.append('user_id', user_id);
+
+
+    return this.httpClient.post(this.SERVER_ADDRESS + '' + this.deleteUserUrl, input, httpOptions)
+      .pipe(
+        map(response => this.result = response),
+        timeout(60000), // set request timeout to 1 minutes
+        catchError(
+          error => of(
+            this.handleError(error)
+          ))
+      );
+
+  }
+
 
 
 

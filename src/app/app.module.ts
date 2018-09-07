@@ -12,7 +12,8 @@ import { LoginComponent } from './components/login/login.component';
 // Materialize modules
 
 import {
-  MzBaseModal, MzCheckboxModule, MzCollapsibleModule, MzFeatureDiscoveryModule, MzIconMdiModule, MzIconModule,
+  MzBaseModal, MzCheckboxModule, MzCollapsibleModule, MzDropdownModule, MzFeatureDiscoveryModule, MzIconMdiModule,
+  MzIconModule,
   MzModalComponent,
   MzModalModule, MzNavbarModule, MzSelectModule, MzSidenavModule,
   MzSpinnerModule,
@@ -83,6 +84,7 @@ const routes: Routes = [
     MzCollapsibleModule,
     MzCheckboxModule,
     MzSelectModule,
+    MzDropdownModule,
     //
     HttpClientModule,
     RouterModule.forRoot(routes),
