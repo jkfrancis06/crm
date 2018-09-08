@@ -16,10 +16,14 @@ export class RestApiRequestService {
   public dashboardUrl = '/crm/index.php/dashboard';
   public userListUrl = '/crm/index.php/admin/user_list';
   public clientListUrl = '/crm/index.php/client/client_list';
+  public moduleListUrl = '/crm/index.php/admin/module_list';
   public userAddUrl = '/crm/index.php/admin/user_add';
   public profileListUrl = '/crm/index.php/admin/profil_list';
   public editUserUrl = '/crm/index.php/admin/user_edit';
   public deleteUserUrl = '/crm/index.php/admin/user_delete';
+  public deleteProfileUrl = '/crm/index.php/admin/profil_delete';
+  public addProfileUrl = '/crm/index.php/admin/profil_add';
+  public editProfileUrl = '/crm/index.php/admin/profil_edit';
 
 
   SERVER_ADDRESS: string;
@@ -145,6 +149,34 @@ export class RestApiRequestService {
     input.append('token', this.token);
 
     return this.httpClient.post(this.SERVER_ADDRESS + '' + this.clientListUrl, input, httpOptions)
+      .pipe(
+        map(response => this.result = response),
+        timeout(60000), // set request timeout to 1 minutes
+        catchError(
+          error => of(
+            this.handleError(error)
+          ))
+      );
+
+  }
+
+
+  // Load modules list
+
+  loadModulesList(): Observable<any> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Access-Control-Allow-Origin': '*'
+      })
+    };
+
+    this.token = localStorage.getItem('token');
+    console.log(this.token);
+
+    const input = new FormData();
+    input.append('token', this.token);
+
+    return this.httpClient.post(this.SERVER_ADDRESS + '' + this.moduleListUrl, input, httpOptions)
       .pipe(
         map(response => this.result = response),
         timeout(60000), // set request timeout to 1 minutes
@@ -301,6 +333,117 @@ export class RestApiRequestService {
       );
 
   }
+
+
+  // delete profile
+
+  deleteProfile(profile_id): Observable<any> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Access-Control-Allow-Origin': '*'
+      })
+    };
+
+    this.token = localStorage.getItem('token');
+    console.log(this.token);
+
+
+    const input = new FormData();
+    input.append('token', this.token);
+    input.append('profil_id', profile_id);
+
+    return this.httpClient.post(this.SERVER_ADDRESS + '' + this.deleteProfileUrl, input, httpOptions)
+      .pipe(
+        map(response => this.result = response),
+        timeout(60000), // set request timeout to 1 minutes
+        catchError(
+          error => of(
+            this.handleError(error)
+          ))
+      );
+
+  }
+
+
+
+  // create profile
+
+  createProfile(profile): Observable<any> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Access-Control-Allow-Origin': '*'
+      })
+    };
+
+    this.token = localStorage.getItem('token');
+    console.log(this.token);
+
+    const input = new FormData();
+    input.append('token', this.token);
+    input.append('libelle', profile.libelle);
+    input.append('description', profile.description);
+
+    let modules: any;
+    modules = [];
+    // pushing only ids un new array
+    for (let i = 0; i < profile.modules.length; i++) {
+      modules.push(profile.modules[i].c_id);
+    }
+    input.append('modules', modules);
+
+    console.log(modules);
+
+    return this.httpClient.post(this.SERVER_ADDRESS + '' + this.addProfileUrl, input, httpOptions)
+      .pipe(
+        map(response => this.result = response),
+        timeout(60000), // set request timeout to 1 minutes
+        catchError(
+          error => of(
+            this.handleError(error)
+          ))
+      );
+
+  }
+
+
+  // edit profile
+
+  editProfile(profile, profile_id): Observable<any> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Access-Control-Allow-Origin': '*'
+      })
+    };
+
+    this.token = localStorage.getItem('token');
+    console.log(this.token);
+
+    const isReset: any = profile.isReset ? 1 : 0 ;
+
+
+    const input = new FormData();
+    input.append('token', this.token);
+    input.append('profil_id', profile_id);
+    input.append('libelle', profile.libelle);
+    input.append('description', profile.description);
+    input.append('modules', profile.modules);
+
+
+    return this.httpClient.post(this.SERVER_ADDRESS + '' + this.editProfileUrl, input, httpOptions)
+      .pipe(
+        map(response => this.result = response),
+        timeout(60000), // set request timeout to 1 minutes
+        catchError(
+          error => of(
+            this.handleError(error)
+          ))
+      );
+
+  }
+
+
+
+
 
 
 

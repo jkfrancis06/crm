@@ -110,6 +110,7 @@ export class ChangePasswordComponent implements OnInit, AfterViewInit {
           localStorage.setItem('must_change_password', '0');
         }
         this.toastService.show('Mot de passe modifié avec success', 5000, 'green');
+        localStorage.removeItem('token');
         this.router.navigate(['/']);
       }
 

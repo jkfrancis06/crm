@@ -3,21 +3,22 @@ import {RestApiRequestService} from '../../providers/rest/rest-api-request.servi
 import {MzToastService} from 'ngx-materialize';
 
 @Component({
-  selector: 'app-user-manage',
-  templateUrl: './user-manage.component.html',
-  styleUrls: ['./user-manage.component.css']
+  selector: 'app-manage-profile',
+  templateUrl: './manage-profile.component.html',
+  styleUrls: ['./manage-profile.component.css']
 })
-export class UserManageComponent implements OnInit {
+export class ManageProfileComponent implements OnInit {
+
 
   loader = false;
-  users: any;
   droits: any;
   permissions = {
-    edit_user: false,
-    delete_user: false,
-    add_user: false
+    edit_profile: false,
+    delete_profile: false,
+    add_profile: false
   };
-  temp_user: any;
+  temp_profile: any;
+  profiles: any;
 
   constructor(private restApiService: RestApiRequestService,
               private toastService: MzToastService) { }
@@ -28,21 +29,21 @@ export class UserManageComponent implements OnInit {
 
     console.log(this.droits);
 
-    if (this.droits.admin.user.includes('edit')) {
-      this.permissions.edit_user = true;
+    if (this.droits.admin.profil.includes('edit')) {
+      this.permissions.edit_profile = true;
     }
 
     if (this.droits.admin.user.includes('delete')) {
-      this.permissions.delete_user = true;
+      this.permissions.delete_profile = true;
     }
 
     if (this.droits.admin.user.includes('add')) {
-      this.permissions.add_user = true;
+      this.permissions.add_profile = true;
     }
 
     this.loader = true;  // show loader
 
-    this.restApiService.loadUserList().subscribe(response => {
+    this.restApiService.loadProfileList().subscribe(response => {
 
       console.log(response);
       this.loader = false; // hide loader
@@ -52,18 +53,18 @@ export class UserManageComponent implements OnInit {
       }
 
       if (response.result === 1) {
-        this.users = response.users;
-        this.temp_user = this.users;
+        this.profiles = response.profil;
+        this.temp_profile = this.profiles;
       }
 
     });
   }
 
-  removeUser(user_id, index) {
-    if (confirm('Voulez vous vraiment supprimer cet utilisateur?')) {
+  removeProfile(profile_id, index) {
+    if (confirm('Voulez vous vraiment supprimer ce profil?')) {
       this.loader = true;  // show loader
 
-      this.restApiService.deleteUser(user_id).subscribe(response => {
+      this.restApiService.deleteProfile(profile_id).subscribe(response => {
 
         console.log(response);
         this.loader = false; // hide loader
@@ -73,7 +74,7 @@ export class UserManageComponent implements OnInit {
         }
 
         if (response.result === 1) {
-          this.users.splice(index, 1);
+          this.profiles.splice(index, 1);
           this.toastService.show(response.comment, 5000, 'green');
         }
 
@@ -84,13 +85,14 @@ export class UserManageComponent implements OnInit {
   onSearchChange(val: string) {
     // if the value is an empty string don't filter the items
     // Reset items back to all of the items
-    this.users = this.temp_user;
+    this.profiles = this.temp_profile;
 
     if (val && val.trim() != '') {
-      this.users = this.users.filter((item) => {
-        const row = item.c_nom + ' ' + item.c_prenom;
+      this.profiles = this.profiles.filter((item) => {
+        const row = item.c_libelle;
         return (row.toLowerCase().indexOf(val.toLowerCase()) > -1);
       });
     }
   }
+
 }

@@ -9,7 +9,7 @@
   <nav class="top-nav" style="background-color: #34539D; color: white; margin-bottom: 3em">
     <div class="container" style="text-align: center">
       <div class="nav-wrapper">
-        <a class="page-title">Gestion des utilisateurs</a>
+        <a class="page-title">Gestion des profils</a>
       </div>
     </div>
   </nav>
@@ -22,7 +22,7 @@
     <div class="input-field col s12 m12 l6 offset-l6">
       <i style="margin-top: 11px" class="material-icons prefix">search</i>
       <input id="icon_prefix" type="search" class="validate" (input)="onSearchChange($event.target.value)">
-      <label for="icon_prefix">Rechercher un utilisateur</label>
+      <label for="icon_prefix">Rechercher un profil</label>
     </div>
   </div>
 
@@ -37,29 +37,29 @@
         [onClose]="closeFunctionCallback"
         [onOpen]="openFunctionCallback"
         [popout]="true">
-        <mz-collapsible-item *ngFor="let user of users| paginate: { itemsPerPage: 10, currentPage: p } ; let i = index" >
+        <mz-collapsible-item *ngFor="let profile of profiles| paginate: { itemsPerPage: 10, currentPage: p } ; let i = index" >
           <mz-collapsible-item-header style="width:100%;">
             <div class="left">
-              {{user.c_nom}} {{user.c_prenom}}
+              {{profile.c_libelle}}
             </div>
 
             <div class="right" style="margin-top: -7px;font-size: 20px">
               <div>
-                <a style="margin-left: 1em" *ngIf="permissions.edit_user" [routerLink]="['/admin/edit-user/',user.c_id]" class="waves-effect waves-light">
+                <a style="margin-left: 1em" *ngIf="permissions.edit_profile" [routerLink]="['/admin/edit-profile/',profile.c_id]" class="waves-effect waves-light">
                   <i class="material-icons">mode_edit</i>
                 </a>
-                <a *ngIf="permissions.delete_user" (click)="removeUser(user.c_id, i)" class="waves-effect waves-light">
+                <a *ngIf="permissions.delete_profile" (click)="removeProfile(profile.c_id, i)" class="waves-effect waves-light">
                   <i class="material-icons">delete</i>
                 </a>
               </div>
             </div>
 
-            <div class="right">
-              <span *ngIf="user.c_statut == '0'" class="badge orange" style="color: white" data-badge-caption="">Réinitialisé</span>
-              <span *ngIf="user.c_statut == '1'" class="badge green" style="color: white" data-badge-caption="">Activé</span>
-              <span *ngIf="user.c_statut == '99'" class="badge red" style="color: white" data-badge-caption="">Désactivé</span>
+            <!--<div class="right">-->
+              <!--<span *ngIf="user.c_statut == '0'" class="badge orange" style="color: white" data-badge-caption="">Réinitialisé</span>-->
+              <!--<span *ngIf="user.c_statut == '1'" class="badge green" style="color: white" data-badge-caption="">Activé</span>-->
+              <!--<span *ngIf="user.c_statut == '99'" class="badge red" style="color: white" data-badge-caption="">Désactivé</span>-->
 
-            </div>
+            <!--</div>-->
 
           </mz-collapsible-item-header>
           <mz-collapsible-item-body >
@@ -69,32 +69,20 @@
               <table>
                 <tbody>
                 <tr>
-                  <td style="font-weight: bold">Nom:</td>
-                  <td>{{user.c_nom}}</td>
+                  <td style="font-weight: bold">Libelle:</td>
+                  <td>{{profile.c_libelle}}</td>
                 </tr>
                 <tr>
-                  <td style="font-weight: bold">Prénoms:</td>
-                  <td>{{user.c_prenom}}</td>
+                  <td style="font-weight: bold">Description:</td>
+                  <td>{{profile.c_description}}</td>
                 </tr>
                 <tr>
-                  <td style="font-weight: bold">Libellé:</td>
-                  <td>{{user.c_libelle}}</td>
-                </tr>
-                <tr>
-                  <td style="font-weight: bold">Numéro de telephone:</td>
-                  <td> {{user.c_tel}}</td>
-                </tr>
-                <tr>
-                  <td style="font-weight: bold">Login:</td>
-                  <td> {{user.c_login}} </td>
-                </tr>
-                <tr>
-                  <td style="font-weight: bold">Derniere connexion:</td>
-                  <td>{{user.c_date_con}}</td>
-                </tr>
-                <tr>
-                  <td style="font-weight: bold">Derniere modification: </td>
-                  <td> {{user.c_date_mod}}</td>
+                  <td style="font-weight: bold">Modules:</td>
+                  <td>
+                    <blockquote>
+                      <span *ngFor="let modules of profile.c_modules"> {{modules.c_libelle}} ,</span>
+                    </blockquote>
+                  </td>
                 </tr>
                 </tbody>
               </table>
@@ -121,8 +109,8 @@
 
 
 
-  <div class="fixed-action-btn" *ngIf="permissions.add_user">
-    <a routerLink="/admin/create-user" class="btn-floating btn-large" style="background-color: #3A439B">
+  <div class="fixed-action-btn" *ngIf="permissions.add_profile">
+    <a routerLink="/admin/create-profile" class="btn-floating btn-large" style="background-color: #3A439B">
       <i class="large material-icons">add</i>
     </a>
   </div>

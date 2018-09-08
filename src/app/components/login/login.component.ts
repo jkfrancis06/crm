@@ -71,10 +71,10 @@ export class LoginComponent implements OnInit {
           // if invalid password or username
           if (response.result === 0) {
             // show toast and forms to invalid
-            this.toastService.show('Nom d\'utilisateur ou mot de passe invalides.',6000, 'red');
+            this.toastService.show(response.comment,6000, 'red');
           } else {
             // if success show success toast and set user data in local storage
-            this.toastService.show('Connexion réussie',5000, 'green');
+            this.toastService.show(response.comment,5000, 'green');
             localStorage.setItem('token', response.token);
             localStorage.setItem('user', JSON.stringify(response.user));
             localStorage.setItem('must_change_password', response.must_change_password);

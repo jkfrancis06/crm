@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {formatDate} from "@angular/common";
+import {formatDate} from '@angular/common';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-nav-bar',
@@ -12,7 +13,7 @@ export class NavBarComponent implements OnInit {
   last_login: string;
   droits: any;
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit() {
     this.user = JSON.parse(localStorage.getItem('user'));
@@ -63,4 +64,11 @@ export class NavBarComponent implements OnInit {
   }
 
 
+  logoutUser() {
+    localStorage.removeItem('token');
+    localStorage.removeItem('droit');
+    localStorage.removeItem('user');
+    localStorage.removeItem('must_change_password');
+    this.router.navigate(['/login']);
+  }
 }

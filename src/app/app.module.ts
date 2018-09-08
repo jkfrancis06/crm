@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 
-import {NgControl, ReactiveFormsModule} from '@angular/forms';
+import {FormsModule, NgControl, ReactiveFormsModule} from '@angular/forms';
 
 
 import { AppComponent } from './app.component';
@@ -16,7 +16,7 @@ import {
   MzIconModule,
   MzModalComponent,
   MzModalModule, MzNavbarModule, MzSelectModule, MzSidenavModule,
-  MzSpinnerModule,
+  MzSpinnerModule, MzTextareaModule,
   MzToastModule,
   MzValidationModule
 } from 'ngx-materialize';
@@ -32,6 +32,10 @@ import {ChartsModule} from 'ng2-charts';
 import { UserManageComponent } from './components/user-manage/user-manage.component';
 import { CreateUserComponent } from './components/create-user/create-user.component';
 import { EditUserComponent } from './components/edit-user/edit-user.component';
+import {NgxPaginationModule} from 'ngx-pagination';
+import { EditProfileComponent } from './components/edit-profile/edit-profile.component';
+import { AddProfileComponent } from './components/add-profile/add-profile.component';
+import { ManageProfileComponent } from './components/manage-profile/manage-profile.component';
 // import { EditUserComponent } from './components/edit-user/edit-user.component';
 
 
@@ -48,9 +52,11 @@ const routes: Routes = [
   { path: 'change-password', component: ChangePasswordComponent},
   { path: 'admin/user-manage', component: UserManageComponent, canActivate: [AuthGuard]},
   { path: 'admin/create-user', component: CreateUserComponent, canActivate: [AuthGuard]},
-  { path: 'admin/edit-user/:id', component: EditUserComponent, canActivate: [AuthGuard]}
+  { path: 'admin/edit-user/:id', component: EditUserComponent, canActivate: [AuthGuard]},
+  { path: 'admin/edit-profile/:id', component: EditProfileComponent, canActivate: [AuthGuard]},
+  { path: 'admin/profile-manage', component: ManageProfileComponent, canActivate: [AuthGuard]},
+  { path: 'admin/create-profile', component: AddProfileComponent, canActivate: [AuthGuard]},
   ];
-
 
 @NgModule({
   declarations: [
@@ -62,13 +68,18 @@ const routes: Routes = [
     ChangePasswordComponent,
     UserManageComponent,
     CreateUserComponent,
-    EditUserComponent
+    EditUserComponent,
+    EditProfileComponent,
+    AddProfileComponent,
+    ManageProfileComponent
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
     ChartsModule,
+    NgxPaginationModule,
+    FormsModule,
     //
     MzValidationModule,
     MzInputModule,
@@ -85,6 +96,7 @@ const routes: Routes = [
     MzCheckboxModule,
     MzSelectModule,
     MzDropdownModule,
+    MzTextareaModule,
     //
     HttpClientModule,
     RouterModule.forRoot(routes),

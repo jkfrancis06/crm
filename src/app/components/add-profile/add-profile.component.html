@@ -1,0 +1,83 @@
+<app-nav-bar></app-nav-bar>
+
+<div *ngIf="loader == true" class="spinner-box">
+  <mz-spinner [color]="'blue'" [size]="'big'" style="position: absolute;left: 50%;top: 40%;">
+  </mz-spinner>
+</div>
+
+<header>
+  <nav class="top-nav" style="background-color: #34539D; color: white; margin-bottom: 3em">
+    <div class="container" style="text-align: center">
+      <div class="nav-wrapper">
+        <a class="page-title">Créer un profil</a>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<main>
+
+
+  <div class="row">
+    <div class="col s12 l8 offset-l2">
+      <form [formGroup]="profileForm" (ngSubmit)="onSubmit()" novalidate>
+        <div class="row">
+          <div class="col s12">
+            <div class="row">
+              <mz-input-container class="col s12">
+                <input mz-input mz-validation required
+                       id="libelle"
+                       formControlName="libelle"
+                       type="text"
+                       [errorMessageResource]="errorMessageResources.libelle"
+                       [label]="'Libellé'"/>
+              </mz-input-container>
+            </div>
+
+            <div class="row">
+              <mz-textarea-container class="col s12">
+                <textarea mz-textarea mz-validation required
+                          id="textarea-profile-description"
+                          formControlName="description"
+                          [errorMessageResource]="errorMessageResources.description"
+                          [label]="'Description'"
+                >
+                </textarea>
+              </mz-textarea-container>
+            </div>
+
+
+            <div class="row">
+              <mz-select-container class="col s12">
+                <select mz-select multiple mz-validation
+                        id="select-profile-modules"
+                        formControlName="modules"
+                        [errorMessageResource]="errorMessageResources.modules"
+                        [filledIn]="true"
+                        [label]="'Modules'"
+                        [placeholder]="'Ajouter des modules'">
+                  <option *ngFor="let module of modules" [ngValue]="module">{{ module.c_libelle }}</option>
+                </select>
+              </mz-select-container>
+            </div>
+
+
+            <div class="row">
+              <div class="col s6">
+                <button mz-button [disabled]="!profileForm.valid" type="submit">Valider</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+
+
+      <div *ngIf="loader == true" class="spinner-box">
+        <mz-spinner [color]="'blue'" [size]="'big'" style="position: absolute;left: 50%;top: 40%;">
+        </mz-spinner>
+      </div>
+
+    </div>
+  </div>
+
+</main>

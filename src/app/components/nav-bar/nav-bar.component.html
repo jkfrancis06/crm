@@ -33,9 +33,9 @@
         <mz-sidenav-link *ngIf="droits.admin.user">
           <a style="margin-left: 1em" routerLink="/admin/user-manage" class="waves-effect">Gestion des Utilisateurs</a>
         </mz-sidenav-link>
-        <mz-sidenav-divider *ngIf="droits.admin.profile"></mz-sidenav-divider>
-        <mz-sidenav-link *ngIf="droits.admin.profile">
-          <a style="margin-left: 1em" href="#" class="waves-effect">Gestion des Profils</a>
+        <mz-sidenav-divider *ngIf="droits.admin.profil"></mz-sidenav-divider>
+        <mz-sidenav-link *ngIf="droits.admin.profil">
+          <a routerLink="/admin/profile-manage" style="margin-left: 1em" href="#" class="waves-effect">Gestion des Profils</a>
         </mz-sidenav-link>
         <mz-sidenav-divider *ngIf="droits.admin.log"></mz-sidenav-divider>
         <mz-sidenav-link *ngIf="droits.admin.log">
@@ -75,11 +75,11 @@
       </mz-sidenav-collapsible-header>
       <mz-sidenav-collapsible-content>
         <mz-sidenav-link>
-          <a href="#" class="waves-effect">Changer de mot de passe</a>
+          <a routerLink="/change-password" style="margin-left: 1em" href="#" class="waves-effect">Changer de mot de passe</a>
         </mz-sidenav-link>
         <mz-sidenav-divider></mz-sidenav-divider>
         <mz-sidenav-link>
-          <a href="#" class="waves-effect">Deconnexion</a>
+          <a (click)="logoutUser()" style="margin-left: 1em" href="#" class="waves-effect">Deconnexion</a>
         </mz-sidenav-link>
       </mz-sidenav-collapsible-content>
     </mz-sidenav-collapsible>
